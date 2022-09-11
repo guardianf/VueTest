@@ -31,7 +31,8 @@ export default {
       return this.menu.children && this.menu.children.length > 0;
     },
     menuIndex() {
-      return String(this.menu.meta.index + 1);
+      // return String(this.menu.meta.index + 1);
+      return this.menu.path;
     }
   },
 }

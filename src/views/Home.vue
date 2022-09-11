@@ -24,10 +24,12 @@
       <el-aside width='120px'>
         <el-menu
           class='el-menu-vertical-demo'
-          mode
-          default-active='1'
+          mode='vertical'
+          :default-active='$route.path'
           @open='handleOpen'
           router
+          menu-trigger='click'
+          :unique-opened='true'
           >
           <NavMenu v-for='menu in menus' :menu='menu'></NavMenu>
         </el-menu>

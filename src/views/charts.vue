@@ -32,19 +32,49 @@ export default {
     //
     const lineChart = this.$charts.init(document.getElementById('lineChart'));
     this.getCovid('上海').then((res) => {
-      console.log(res);
-      // lineChart.setOption({
-      //   series: [{
-      //     type: 'line',
-      //     roseType: 'angle',
-      //     radius: '85%',
-      //     center: ['50%', '50%'],
-      //     data: res,
-      //     label: {
-      //       position: 'inside',
-      //     },
-      //   }],
-      // });
+      console.log(res.data);
+      const city = res.data.data[0].trend;
+      const cityName = res.data.data[0].name;
+      lineChart.setOption({
+        title: {
+          text: `新冠疫情${cityName}情况`,
+        },
+        xAxis: {
+          type: 'category',
+          data: city.updateDate,
+        },
+        yAxis: {
+          type: 'value',
+        },
+        legend: {
+          data: city.list.map(item => item.name),
+        },
+        tooltip: {
+          trigger: 'axis',
+        },
+        series: [
+          {
+            type: 'line',
+            name: city.list[0].name,
+            data: city.list[0].data
+          }, {
+            type: 'line',
+            name: city.list[1].name,
+            data: city.list[1].data
+          }, {
+            type: 'bar',
+            name: city.list[2].name,
+            data: city.list[2].data
+          }, {
+            type: 'bar',
+            name: city.list[3].name,
+            data: city.list[3].data
+          }
+        ],
+        // label: {
+        //   position: 'inside',
+        // },
+      });
     });
   },
   methods: {
@@ -67,13 +97,11 @@ export default {
       return ret;
     },
     getCovid(area) {
-      const callbackName = '';
-      const url = `https://voice.baidu.com/newpneumonia/getv2?target=trend&isCaseIn=1&from=mola-virus&area=${encodeURI(area)}&stage=publish&callback=${callbackName}`;
+      const callbackName = 'do';
+      const url = `https://voice.baidu.com:443/newpneumonia/getv2?target=trend&isCaseIn=1&from=mola-virus&area=${area}&stage=publish&callback=${callbackName}`;
       return this.$axios({
         type: 'get',
-        headers: {
-          'Access-Control-Allow-Origin': 'www.baidu.com',
-        }
+        url: 'charts/line'
       })
     }
   },
@@ -86,7 +114,9 @@ export default {
   height: 200px;
 }
 #lineChart {
-  @extend #pieChart
+  @extend #pieChart;
+  width: 1000px;
+  height: 400px;
 }
 
 </style>

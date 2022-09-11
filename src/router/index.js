@@ -30,6 +30,29 @@ const routes = [
       },
     ],
   }, {
+    path: '/sons',
+    name: 'sons',
+    component: () => import('../components/Viewer.vue'),
+    meta: {
+      index: 5,
+    },
+    children: [{
+      path: '/sons/table_test',
+      name: '表格样例sons',
+      component: () => import('../views/tableTest.vue'),
+      meta: {
+        index: 7,
+        needAutho: true,
+      },
+    }, {
+      path: '/sons/charts',
+      name: '图标样例sons',
+      component: () => import('../views/charts.vue'),
+      meta: {
+        index: 6,
+      },
+    }],
+  }, {
     path: '/about',
     name: 'About',
     // route level code-splitting
